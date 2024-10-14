@@ -3,6 +3,7 @@ package com.example.controlenotas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -37,8 +38,9 @@ public class AddNotas extends AppCompatActivity {
         TextInputEditText notaCredET = findViewById(R.id.notaCredET);
         TextInputEditText notaTrabET = findViewById(R.id.notaTrabET);
         TextInputEditText notaListaET = findViewById(R.id.notaListaET);
-        TextInputEditText notaPrecisoET = findViewById(R.id.notaPrecisoET);
         TextInputEditText notaProvaET = findViewById(R.id.notaProvaET);
+
+        TextView notaPrecisoTxt = findViewById(R.id.notaPrecisoTxt);
 
         MaterialButton addNotas = findViewById(R.id.addNota);
 
@@ -55,6 +57,15 @@ public class AddNotas extends AppCompatActivity {
                 if (nomeMateria.isEmpty() || notaCred.isEmpty() || notaTrab.isEmpty() || notaList.isEmpty() || notaPro.isEmpty()) {
                     Toast.makeText(AddNotas.this, "Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
                     return;
+                }else{
+                    float ntPreciso ,ntCred, ntTrab, ntList;
+
+                    ntCred = Float.parseFloat(notaCred);
+                    ntTrab = Float.parseFloat(notaTrab);
+                    ntList = Float.parseFloat(notaList);
+
+                    ntPreciso = (ntCred+ntTrab+ntList)-6;
+                    notaPrecisoTxt = String.valueOf(ntPreciso);
                 }
 
                 Map<String, Object> notas = new HashMap<>();
@@ -62,7 +73,7 @@ public class AddNotas extends AppCompatActivity {
                 notas.put("cred", Objects.requireNonNull(notaCredET.getText()).toString());
                 notas.put("trab", Objects.requireNonNull(notaTrabET.getText()).toString());
                 notas.put("list", Objects.requireNonNull(notaListaET.getText()).toString());
-                notas.put("pre", Objects.requireNonNull(notaPrecisoET.getText()).toString());
+                notas.put("pre", Objects.requireNonNull(notaPrecisoTxt.getText()).toString());
                 notas.put("prova", Objects.requireNonNull(notaProvaET.getText()).toString());
 
                 db.collection("notas").add(notas).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
