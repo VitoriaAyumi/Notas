@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="azulMaisClaro">#AACFE4</color>
+    <color name="azul2">#4C7DAA</color>
+    <color name="azulMaisEscuro">#003366</color>
+    <color name="laranjaMaisClaro">#FFEFDE</color>
+    <color name="laranja2">#FFCFA2</color>
+    <color name="laranja3">#FFBC62</color>
+    <color name="laranjaMaisEscuro">#F7A206</color>
+</resources>
