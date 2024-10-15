@@ -40,13 +40,13 @@ public class AddNotas extends AppCompatActivity {
         TextInputEditText notaListaET = findViewById(R.id.notaListaET);
         TextInputEditText notaProvaET = findViewById(R.id.notaProvaET);
 
-        TextView notaPrecisoTxt = findViewById(R.id.notaPrecisoTxt);
-
         MaterialButton addNotas = findViewById(R.id.addNota);
 
         addNotas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String notaPreciso;
 
                 String nomeMateria = Objects.requireNonNull(nomeMateriaET.getText()).toString().trim();
                 String notaCred = Objects.requireNonNull(notaCredET.getText()).toString().trim();
@@ -57,15 +57,23 @@ public class AddNotas extends AppCompatActivity {
                 if (nomeMateria.isEmpty() || notaCred.isEmpty() || notaTrab.isEmpty() || notaList.isEmpty() || notaPro.isEmpty()) {
                     Toast.makeText(AddNotas.this, "Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
                     return;
-                }else{
-                    float ntPreciso ,ntCred, ntTrab, ntList;
+                } else {
+                    float ntPreciso, ntCred, ntTrab, ntList;
 
                     ntCred = Float.parseFloat(notaCred);
                     ntTrab = Float.parseFloat(notaTrab);
                     ntList = Float.parseFloat(notaList);
 
-                    ntPreciso = (ntCred+ntTrab+ntList)-6;
-                    notaPrecisoTxt = String.valueOf(ntPreciso);
+                    float ntSoma = ntCred + ntTrab + ntList;
+
+                    if(ntSoma < 6){
+                        ntPreciso = 6 - ntSoma;
+                        notaPreciso = String.valueOf(ntPreciso);
+                    }else{
+                        notaPreciso = "Não precisa de pontos para passar!!";
+                        Toast.makeText(AddNotas.this, "Não está de recuperação!!", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
                 Map<String, Object> notas = new HashMap<>();
@@ -73,22 +81,22 @@ public class AddNotas extends AppCompatActivity {
                 notas.put("cred", Objects.requireNonNull(notaCredET.getText()).toString());
                 notas.put("trab", Objects.requireNonNull(notaTrabET.getText()).toString());
                 notas.put("list", Objects.requireNonNull(notaListaET.getText()).toString());
-                notas.put("pre", Objects.requireNonNull(notaPrecisoTxt.getText()).toString());
+                notas.put("pre", Objects.requireNonNull(notaPreciso).toString());
                 notas.put("prova", Objects.requireNonNull(notaProvaET.getText()).toString());
 
                 db.collection("notas").add(notas).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(AddNotas.this, "Notas adicionadas com sucesso!!", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(AddNotas.this, "Falha Ao Tentar Adicionar Matéria: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                Log.e(TAG, "Erro ao adicionar matéria", e);
-                            }
-                        });
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(AddNotas.this, "Notas adicionadas com sucesso!!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AddNotas.this, "Falha Ao Tentar Adicionar Matéria: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Erro ao adicionar matéria", e);
+                    }
+                });
             }
         });
 

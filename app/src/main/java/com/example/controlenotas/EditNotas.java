@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,8 +35,9 @@ public class EditNotas extends AppCompatActivity {
         TextInputEditText notaCredET = findViewById(R.id.notaCredET);
         TextInputEditText notaTrabET = findViewById(R.id.notaTrabET);
         TextInputEditText notaListaET = findViewById(R.id.notaListaET);
-        TextInputEditText notaPrecisoET = findViewById(R.id.notaPrecisoET);
         TextInputEditText notaProvaET = findViewById(R.id.notaProvaET);
+
+        TextView notaPrecisoTxt = findViewById(R.id.notaPrecisoTxt);
 
         MaterialButton save = findViewById(R.id.save);
         MaterialButton delete = findViewById(R.id.delete);
@@ -44,7 +46,7 @@ public class EditNotas extends AppCompatActivity {
         notaCredET.setText(App.notas.getCred());
         notaListaET.setText(App.notas.getList());
         notaTrabET.setText(App.notas.getTrab());
-        notaPrecisoET.setText(App.notas.getPre());
+        notaPrecisoTxt.setText(App.notas.getPre());
         notaProvaET.setText(App.notas.getProva());
 
         Log.d("EditNotas", "nomeMateria: " + App.notas.getNomeMateria());
@@ -95,16 +97,34 @@ public class EditNotas extends AppCompatActivity {
                         .setMessage("Tem certeza que deseja salvar as alterações?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                String notaPreciso;
 
-                                // Verificação de campos vazios
-                                if (nomeMateriaET.getText().toString().isEmpty() ||
-                                        notaCredET.getText().toString().isEmpty() ||
-                                        notaTrabET.getText().toString().isEmpty() ||
-                                        notaListaET.getText().toString().isEmpty() ||
-                                        notaPrecisoET.getText().toString().isEmpty() ||
-                                        notaProvaET.getText().toString().isEmpty()) {
-                                    Toast.makeText(EditNotas.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                                String nomeMateria = Objects.requireNonNull(nomeMateriaET.getText()).toString().trim();
+                                String notaCred = Objects.requireNonNull(notaCredET.getText()).toString().trim();
+                                String notaTrab = Objects.requireNonNull(notaTrabET.getText()).toString().trim();
+                                String notaList = Objects.requireNonNull(notaListaET.getText()).toString().trim();
+                                String notaPro = Objects.requireNonNull(notaProvaET.getText()).toString().trim();
+
+                                if (nomeMateria.isEmpty() || notaCred.isEmpty() || notaTrab.isEmpty() || notaList.isEmpty() || notaPro.isEmpty()) {
+                                    Toast.makeText(EditNotas.this, "Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
                                     return;
+                                } else {
+                                    float ntPreciso, ntCred, ntTrab, ntList;
+
+                                    ntCred = Float.parseFloat(notaCred);
+                                    ntTrab = Float.parseFloat(notaTrab);
+                                    ntList = Float.parseFloat(notaList);
+
+                                    float ntSoma = ntCred + ntTrab + ntList;
+
+                                    if(ntSoma < 6){
+                                        ntPreciso = 6 - ntSoma;
+                                        notaPreciso = String.valueOf(ntPreciso);
+                                    }else{
+                                        notaPreciso = "Não precisa de pontos para passsar!!!" ;
+                                        Toast.makeText(EditNotas.this, "Não está de recuperação!!", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
 
                                 Map<String, Object> notas = new HashMap<>();
@@ -112,7 +132,7 @@ public class EditNotas extends AppCompatActivity {
                                 notas.put("cred", Objects.requireNonNull(notaCredET.getText()).toString());
                                 notas.put("trab", Objects.requireNonNull(notaTrabET.getText()).toString());
                                 notas.put("list", Objects.requireNonNull(notaListaET.getText()).toString());
-                                notas.put("pre", Objects.requireNonNull(notaPrecisoET.getText()).toString());
+                                notas.put("pre", Objects.requireNonNull(notaPreciso).toString());
                                 notas.put("prova", Objects.requireNonNull(notaProvaET.getText()).toString());
 
                                 db.collection("notas").document(App.notas.getId()).update(notas)

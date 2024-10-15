@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addN"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/addN"
     android:background="@color/laranjaMaisClaro"
     tools:context=".EditNotas">
 
@@ -19,8 +19,8 @@
             android:id="@+id/imglogo"
             android:layout_width="68dp"
             android:layout_height="61dp"
-            android:layout_marginStart="16dp"
             android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="16dp"
             app:srcCompat="@drawable/logo_img" />
 
         <TextView
@@ -46,140 +46,149 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nomeMateriaLayout"
-        android:layout_weight="1"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hint="Matéria"
         android:layout_below="@id/header"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:hint="Matéria">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nomeMateriaET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:inputType="textCapSentences"/>
+            android:inputType="textCapSentences" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notaCredLayout"
-        android:layout_weight="1"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/nomeMateriaLayout"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Cred"
-        android:layout_below="@id/nomeMateriaLayout"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+        android:layout_weight="1"
+        android:hint="Cred">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/notaCredET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notaTrabLayout"
-        android:layout_weight="1"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="Trabalho"
         android:layout_below="@id/notaCredLayout"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="1"
+        android:hint="Trabalho">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/notaTrabET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notaListaLayout"
-        android:layout_weight="1"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="Lista"
         android:layout_below="@id/notaTrabLayout"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="1"
+        android:hint="Lista">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/notaListaET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:inputType="numberDecimal"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/notaPrecisoLayout"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="Preciso"
-        android:layout_below="@id/notaListaLayout"
-        android:visibility="visible"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/notaPrecisoET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notaProvaLayout"
-        android:layout_weight="1"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/notaListaLayout"
         android:layout_margin="20dp"
+        android:layout_weight="1"
         android:hint="Prova"
-        android:layout_below="@id/notaPrecisoLayout"
-        android:visibility="visible"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+        android:visibility="visible">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/notaProvaET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:text="Presciso:"
+        android:textSize="18dp"
+        android:layout_below="@id/save"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/notaPrecisoLayout"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/save"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:id="@+id/notaPrecisoTxt"
+            android:layout_width="match_parent"
+            android:layout_height="55.2dp"
+            android:background="@drawable/rnd_add_edit"
+            android:paddingLeft="10dp"
+            android:paddingTop="20dp"
+            android:text="Preciso"
+            android:textSize="15dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/notaProvaLayout"
         android:layout_alignStart="@id/notaProvaLayout"
+        android:layout_marginStart="20dp"
+        android:backgroundTint="@color/laranja3"
         android:text="Deletar"
-        app:backgroundTint="@android:color/holo_red_light"
-        android:layout_marginStart="20sp"
-        android:id="@+id/delete"
-        android:backgroundTint="@color/laranja3"/>
+        app:backgroundTint="@android:color/holo_red_light" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Salvar"
-        android:layout_alignEnd="@id/notaProvaLayout"
         android:layout_below="@id/notaProvaLayout"
-        android:id="@+id/save"
+        android:layout_alignEnd="@id/notaProvaLayout"
         android:layout_marginEnd="20sp"
-        android:backgroundTint="@color/laranja3"/>
+        android:backgroundTint="@color/laranja3"
+        android:text="Salvar" />
 
 </RelativeLayout>
