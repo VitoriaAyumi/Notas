@@ -5,14 +5,14 @@
     android:id="@+id/addN"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/laranjaMaisClaro"
+    android:background="@color/orange_clearer"
     tools:context=".EditNotas">
 
     <FrameLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="85dp"
-        android:background="@color/azulMaisEscuro"
+        android:background="@color/blue_2"
         android:paddingTop="5dp">
 
         <ImageView
@@ -177,7 +177,7 @@
         android:layout_below="@id/notaProvaLayout"
         android:layout_alignStart="@id/notaProvaLayout"
         android:layout_marginStart="20dp"
-        android:backgroundTint="@color/laranja3"
+        android:backgroundTint="@color/orange_1"
         android:text="Deletar"
         app:backgroundTint="@android:color/holo_red_light" />
 
@@ -188,7 +188,7 @@
         android:layout_below="@id/notaProvaLayout"
         android:layout_alignEnd="@id/notaProvaLayout"
         android:layout_marginEnd="20sp"
-        android:backgroundTint="@color/laranja3"
+        android:backgroundTint="@color/orange_1"
         android:text="Salvar" />
 
 </RelativeLayout>

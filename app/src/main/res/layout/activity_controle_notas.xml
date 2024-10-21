@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/controleN"
-    android:background="@color/laranjaMaisClaro"
+    android:background="@color/orange_clearer"
     tools:context=".ControleNotas">
 
     <FrameLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="85dp"
-        android:background="@color/azulMaisEscuro"
+        android:background="@color/blue_2"
         android:paddingTop="5dp">
 
         <ImageView
@@ -59,6 +59,6 @@
         android:layout_margin="16sp"
         android:src="@drawable/baseline_add"
         android:id="@+id/addNota"
-        android:backgroundTint="@color/laranja3"/>
+        android:backgroundTint="@color/orange_1"/>
 
 </RelativeLayout>

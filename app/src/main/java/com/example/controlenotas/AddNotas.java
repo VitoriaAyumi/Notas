@@ -81,7 +81,7 @@ public class AddNotas extends AppCompatActivity {
                 notas.put("cred", Objects.requireNonNull(notaCredET.getText()).toString());
                 notas.put("trab", Objects.requireNonNull(notaTrabET.getText()).toString());
                 notas.put("list", Objects.requireNonNull(notaListaET.getText()).toString());
-                notas.put("pre", Objects.requireNonNull(notaPreciso).toString());
+                notas.put("pre", Objects.requireNonNull(notaPreciso));
                 notas.put("prova", Objects.requireNonNull(notaProvaET.getText()).toString());
 
                 db.collection("notas").add(notas).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

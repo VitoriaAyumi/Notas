@@ -34,7 +34,6 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.ViewHolder> 
         holder.notaCred.setText(arrayList.get(position).getCred());
         holder.notaTrab.setText(arrayList.get(position).getTrab());
         holder.notaList.setText(arrayList.get(position).getList());
-        holder.notaPrec.setText(arrayList.get(position).getPre());
         holder.notaPro.setText(arrayList.get(position).getProva());
         holder.itemView.setOnClickListener(view -> onItemClickListener.onClick(arrayList.get(position)));
     }
