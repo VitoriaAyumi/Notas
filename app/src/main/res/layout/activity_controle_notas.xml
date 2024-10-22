@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/controleN"
     android:background="@color/orange_clearer"
-    tools:context=".ControleNotas">
+    tools:context=".ControleNotasActivity">
 
     <FrameLayout
         android:id="@+id/header"

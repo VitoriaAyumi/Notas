@@ -16,14 +16,14 @@
         android:theme="@style/Theme.ControleNotas"
         tools:targetApi="31">
         <activity
-            android:name=".EditNotas"
+            android:name=".ControleNotasEditActivity"
             android:exported="false" />
         <activity
-            android:name=".AddNotas"
+            android:name=".ControleNotasAddActivity"
             android:exported="false" />
 
         <activity
-            android:name=".ControleNotas"
+            android:name=".ControleNotasActivity"
             android:exported="true">
 
             <intent-filter>

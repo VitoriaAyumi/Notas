@@ -3,7 +3,6 @@ package com.example.controlenotas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -21,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class AddNotas extends AppCompatActivity {
+public class ControleNotasAddActivity extends AppCompatActivity {
 
     private static final String TAG = "AddNotas";
 
@@ -55,7 +54,7 @@ public class AddNotas extends AppCompatActivity {
                 String notaPro = Objects.requireNonNull(notaProvaET.getText()).toString().trim();
 
                 if (nomeMateria.isEmpty() || notaCred.isEmpty() || notaTrab.isEmpty() || notaList.isEmpty() || notaPro.isEmpty()) {
-                    Toast.makeText(AddNotas.this, "Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ControleNotasAddActivity.this, "Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     float ntPreciso, ntCred, ntTrab, ntList;
@@ -71,7 +70,7 @@ public class AddNotas extends AppCompatActivity {
                         notaPreciso = String.valueOf(ntPreciso);
                     }else{
                         notaPreciso = "Não precisa de pontos para passar!!";
-                        Toast.makeText(AddNotas.this, "Não está de recuperação!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ControleNotasAddActivity.this, "Não está de recuperação!!", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -87,13 +86,13 @@ public class AddNotas extends AppCompatActivity {
                 db.collection("notas").add(notas).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(AddNotas.this, "Notas adicionadas com sucesso!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ControleNotasAddActivity.this, "Notas adicionadas com sucesso!!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddNotas.this, "Falha Ao Tentar Adicionar Matéria: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ControleNotasAddActivity.this, "Falha Ao Tentar Adicionar Matéria: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.e(TAG, "Erro ao adicionar matéria", e);
                     }
                 });

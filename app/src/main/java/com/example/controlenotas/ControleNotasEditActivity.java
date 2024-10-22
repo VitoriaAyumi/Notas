@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class EditNotas extends AppCompatActivity {
+public class ControleNotasEditActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class EditNotas extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                new AlertDialog.Builder(EditNotas.this)
+                new AlertDialog.Builder(ControleNotasEditActivity.this)
                         .setTitle("Confirmar Exclusão")
                         .setMessage("Tem certeza que deseja deletar essas notas?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
@@ -70,7 +70,7 @@ public class EditNotas extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                Toast.makeText(EditNotas.this, "Notas Deletada Com Sucesso!!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(ControleNotasEditActivity.this, "Notas Deletada Com Sucesso!!", Toast.LENGTH_SHORT).show();
                                                 Intent resultIntent = new Intent();
                                                 setResult(RESULT_OK, resultIntent);
                                                 finish();
@@ -79,7 +79,7 @@ public class EditNotas extends AppCompatActivity {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 Log.e("EditNotas", "Erro Ao Deletar As Notas!!", e);
-                                                Toast.makeText(EditNotas.this, "Erro Ao Deletar As Notas!!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(ControleNotasEditActivity.this, "Erro Ao Deletar As Notas!!", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             }
@@ -92,7 +92,7 @@ public class EditNotas extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(EditNotas.this)
+                new AlertDialog.Builder(ControleNotasEditActivity.this)
                         .setTitle("Confirmar Alteração")
                         .setMessage("Tem certeza que deseja salvar as alterações?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
@@ -106,7 +106,7 @@ public class EditNotas extends AppCompatActivity {
                                 String notaPro = Objects.requireNonNull(notaProvaET.getText()).toString().trim();
 
                                 if (nomeMateria.isEmpty() || notaCred.isEmpty() || notaTrab.isEmpty() || notaList.isEmpty() || notaPro.isEmpty()) {
-                                    Toast.makeText(EditNotas.this, "Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ControleNotasEditActivity.this, "Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
                                     return;
                                 } else {
                                     float ntPreciso, ntCred, ntTrab, ntList;
@@ -122,7 +122,7 @@ public class EditNotas extends AppCompatActivity {
                                         notaPreciso = String.valueOf(ntPreciso);
                                     }else{
                                         notaPreciso = "Não precisa de pontos para passsar!!!" ;
-                                        Toast.makeText(EditNotas.this, "Não está de recuperação!!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ControleNotasEditActivity.this, "Não está de recuperação!!", Toast.LENGTH_SHORT).show();
                                     }
 
                                 }
@@ -139,7 +139,7 @@ public class EditNotas extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                Toast.makeText(EditNotas.this, "Notas Alteradas Com Sucesso!!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(ControleNotasEditActivity.this, "Notas Alteradas Com Sucesso!!", Toast.LENGTH_SHORT).show();
                                                 finish();
                                             }
                                         })
@@ -147,7 +147,7 @@ public class EditNotas extends AppCompatActivity {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 Log.e("EditNotas", "Erro ao salvar as notas", e);
-                                                Toast.makeText(EditNotas.this, "Erro ao salvar as notas", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(ControleNotasEditActivity.this, "Erro ao salvar as notas", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             }
