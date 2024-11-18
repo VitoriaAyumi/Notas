@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -25,9 +24,7 @@ public class ControleNotasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-
         setContentView(R.layout.activity_controle_notas);
-        FirebaseApp.initializeApp(ControleNotasActivity.this);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         RecyclerView recyclerView = findViewById(R.id.recycler);
@@ -41,27 +38,26 @@ public class ControleNotasActivity extends AppCompatActivity {
                 if (error != null) {
                     Toast.makeText(ControleNotasActivity.this, "Falha ao carregar dados: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     return;
-                } else {
-
-                    ArrayList<Notas> arrayList = new ArrayList<>();
-                    assert value != null;
-                    for (QueryDocumentSnapshot document : value) {
-                        Notas notas = document.toObject(Notas.class);
-                        notas.setId(document.getId());
-                        arrayList.add(notas);
-                    }
-
-                    NotasAdapter adapter = new NotasAdapter(ControleNotasActivity.this, arrayList);
-                    recyclerView.setAdapter(adapter);
-
-                    adapter.setOnItemClickListener(new NotasAdapter.OnItemClickListener() {
-                        @Override
-                        public void onClick(Notas notas) {
-                            App.notas = notas;
-                            startActivity(new Intent(ControleNotasActivity.this, ControleNotasEditActivity.class));
-                        }
-                    });
                 }
+
+                ArrayList<Notas> arrayList = new ArrayList<>();
+                assert value != null;
+                for (QueryDocumentSnapshot document : value) {
+                    Notas notas = document.toObject(Notas.class);
+                    notas.setId(document.getId());
+                    arrayList.add(notas);
+                }
+
+                NotasAdapter adapter = new NotasAdapter(ControleNotasActivity.this, arrayList);
+                recyclerView.setAdapter(adapter);
+
+                adapter.setOnItemClickListener(new NotasAdapter.OnItemClickListener() {
+                    @Override
+                    public void onClick(Notas notas) {
+                        App.notas = notas;
+                        startActivity(new Intent(ControleNotasActivity.this, ControleNotasEditActivity.class));
+                    }
+                });
             }
         });
     }

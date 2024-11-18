@@ -20,8 +20,10 @@
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="155dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:background="@color/blue_clearer"
         android:clickable="false"
         android:focusable="false">
@@ -30,7 +32,7 @@
             android:id="@+id/list_item_materia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="@color/blue_2"
             android:textSize="20dp"
             android:ellipsize="end"
             android:singleLine="true"/>
@@ -42,7 +44,8 @@
             android:layout_below="@id/list_item_materia"
             android:textSize="15dp"
             android:ellipsize="end"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/list_item_trab"
@@ -51,7 +54,8 @@
             android:layout_below="@id/list_item_cred"
             android:textSize="15dp"
             android:ellipsize="end"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/list_item_lista"
@@ -60,25 +64,29 @@
             android:layout_below="@id/list_item_trab"
             android:textSize="15dp"
             android:ellipsize="end"
-            android:singleLine="true"/>
-
-        <TextView
-            android:id="@+id/list_item_pre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/list_item_lista"
-            android:textSize="15dp"
-            android:ellipsize="end"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/list_item_pro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/list_item_pre"
+            android:layout_below="@id/list_item_lista"
             android:textSize="15dp"
             android:ellipsize="end"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/list_item_pre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/list_item_pro"
+            android:textSize="15dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/black"/>
+
     </RelativeLayout>
 
         <ImageView

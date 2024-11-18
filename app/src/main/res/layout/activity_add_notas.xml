@@ -41,33 +41,26 @@
             app:srcCompat="@drawable/img_user" />
     </FrameLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nomeMateriaLayout"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+    <Spinner
+        android:id="@+id/spnomeMateria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header"
         android:layout_margin="20dp"
-        android:layout_weight="1"
-        android:hint="Matéria">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nomeMateriaET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:inputType="textCapSentences" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:background="@drawable/rnd_add_edit"
+        android:padding="16dp"
+        android:spinnerMode="dropdown"
+        android:textColor="@color/black" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notaCredLayout"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nomeMateriaLayout"
+        android:layout_below="@id/spnomeMateria"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_weight="1"
+        android:background="@drawable/rnd_add_edit"
         android:hint="Cred">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -75,13 +68,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
+            android:inputType="numberDecimal"
             android:maxLength="4"
-            android:inputType="numberDecimal" />
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notaTrabLayout"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/notaCredLayout"
@@ -89,6 +82,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:layout_weight="1"
+        android:background="@drawable/rnd_add_edit"
         android:hint="Trabalho">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -96,13 +90,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
+            android:inputType="numberDecimal"
             android:maxLength="4"
-            android:inputType="numberDecimal" />
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notaListaLayout"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/notaTrabLayout"
@@ -110,6 +104,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:layout_weight="1"
+        android:background="@drawable/rnd_add_edit"
         android:hint="Lista">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -117,18 +112,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
+            android:inputType="numberDecimal"
             android:maxLength="4"
-            android:inputType="numberDecimal" />
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notaProvaLayout"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/notaListaLayout"
         android:layout_margin="20dp"
         android:layout_weight="1"
+        android:background="@drawable/rnd_add_edit"
         android:hint="Prova"
         android:visibility="visible">
 
@@ -137,8 +133,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
+            android:inputType="numberDecimal"
             android:maxLength="4"
-            android:inputType="numberDecimal" />
+            android:textColor="@color/black"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

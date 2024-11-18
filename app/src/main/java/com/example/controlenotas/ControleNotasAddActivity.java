@@ -1,13 +1,19 @@
 package com.example.controlenotas;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.MenuPopupWindow;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -15,7 +21,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -33,7 +41,7 @@ public class ControleNotasAddActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        TextInputEditText nomeMateriaET = findViewById(R.id.nomeMateriaET);
+        Spinner nomeMateriaSp = findViewById(R.id.spnomeMateria);
         TextInputEditText notaCredET = findViewById(R.id.notaCredET);
         TextInputEditText notaTrabET = findViewById(R.id.notaTrabET);
         TextInputEditText notaListaET = findViewById(R.id.notaListaET);
@@ -41,13 +49,21 @@ public class ControleNotasAddActivity extends AppCompatActivity {
 
         MaterialButton addNotas = findViewById(R.id.addNota);
 
+        carregarMaterias(nomeMateriaSp);
+
         addNotas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String notaPreciso;
 
-                String nomeMateria = Objects.requireNonNull(nomeMateriaET.getText()).toString().trim();
+                String nomeMateria = nomeMateriaSp.getSelectedItem().toString().trim();
+                // Verificar se a matéria é a primeira ("Selecione uma matéria")
+                if (nomeMateria.equals("Selecione uma matéria")) {
+                    Toast.makeText(ControleNotasAddActivity.this, "Por favor, selecione uma matéria válida!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String notaCred = Objects.requireNonNull(notaCredET.getText()).toString().trim();
                 String notaTrab = Objects.requireNonNull(notaTrabET.getText()).toString().trim();
                 String notaList = Objects.requireNonNull(notaListaET.getText()).toString().trim();
@@ -65,10 +81,10 @@ public class ControleNotasAddActivity extends AppCompatActivity {
 
                     float ntSoma = ntCred + ntTrab + ntList;
 
-                    if(ntSoma < 6){
+                    if (ntSoma < 6) {
                         ntPreciso = 6 - ntSoma;
                         notaPreciso = String.valueOf(ntPreciso);
-                    }else{
+                    } else {
                         notaPreciso = "Não precisa de pontos para passar!!";
                         Toast.makeText(ControleNotasAddActivity.this, "Não está de recuperação!!", Toast.LENGTH_SHORT).show();
                     }
@@ -76,7 +92,7 @@ public class ControleNotasAddActivity extends AppCompatActivity {
                 }
 
                 Map<String, Object> notas = new HashMap<>();
-                notas.put("nomeMateria", Objects.requireNonNull(nomeMateriaET.getText()).toString());
+                notas.put("nomeMateria", nomeMateria);
                 notas.put("cred", Objects.requireNonNull(notaCredET.getText()).toString());
                 notas.put("trab", Objects.requireNonNull(notaTrabET.getText()).toString());
                 notas.put("list", Objects.requireNonNull(notaListaET.getText()).toString());
@@ -101,4 +117,53 @@ public class ControleNotasAddActivity extends AppCompatActivity {
 
     }
 
+    private void carregarMaterias(Spinner spinner) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("materias").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // Lista que incluirá o texto neutro no início
+                ArrayList<String> listaMaterias = new ArrayList<>();
+                listaMaterias.add("Selecione uma matéria");  // Adiciona o texto neutro
+
+                // Adiciona as matérias reais da coleção
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    String nomeMateria = document.getString("nomeMateria");
+                    if (nomeMateria != null) {
+                        listaMaterias.add(nomeMateria);
+                    }
+                }
+
+                // Criar um ArrayAdapter customizado
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listaMaterias) {
+                    @Override
+                    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                        View view = super.getDropDownView(position, convertView, parent);
+                        TextView textView = (TextView) view;
+                        // Modificar a cor do texto no dropdown
+                        textView.setTextColor(Color.BLACK);  // Cor do texto no dropdown
+                        // Modificar a cor de fundo do dropdown
+                        view.setBackgroundColor(Color.WHITE); // Cor de fundo no dropdown
+                        return view;
+                    }
+
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View view = super.getView(position, convertView, parent);
+                        TextView textView = (TextView) view;
+                        // Modificar a cor do texto no item selecionado
+                        textView.setTextColor(Color.BLACK);  // Cor do texto no item selecionado
+                        return view;
+                    }
+                };
+
+                // Definir o layout do dropdown
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+
+            } else {
+                Toast.makeText(this, "Erro ao carregar matérias: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
