@@ -42,7 +42,7 @@
     </FrameLayout>
 
     <Spinner
-        android:id="@+id/spnomeMateria"
+        android:id="@+id/nomeMateriaTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header"
@@ -56,7 +56,7 @@
         android:id="@+id/notaCredLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/spnomeMateria"
+        android:layout_below="@id/nomeMateriaTxt"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_weight="1"

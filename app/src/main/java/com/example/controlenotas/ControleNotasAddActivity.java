@@ -11,15 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.MenuPopupWindow;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -41,7 +36,7 @@ public class ControleNotasAddActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        Spinner nomeMateriaSp = findViewById(R.id.spnomeMateria);
+        Spinner nomeMateriaSp = findViewById(R.id.nomeMateriaTxt);
         TextInputEditText notaCredET = findViewById(R.id.notaCredET);
         TextInputEditText notaTrabET = findViewById(R.id.notaTrabET);
         TextInputEditText notaListaET = findViewById(R.id.notaListaET);
