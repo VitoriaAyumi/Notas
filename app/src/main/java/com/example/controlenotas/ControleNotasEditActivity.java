@@ -99,7 +99,6 @@ public class ControleNotasEditActivity extends AppCompatActivity {
 
                     String notaPreciso = (ntSoma < 6) ? String.valueOf(6 - ntSoma) : "Não precisa de pontos para passar!!!";
 
-                    // Buscar nome do professor no Firestore
                     db.collection("materias").whereEqualTo("nomeMateria", nomeMateria).get()
                             .addOnSuccessListener(queryDocumentSnapshots -> {
                                 String nomeProf = "Desconhecido"; // Valor padrão
@@ -110,7 +109,6 @@ public class ControleNotasEditActivity extends AppCompatActivity {
                                     }
                                 }
 
-                                // Criar mapa de notas para atualizar no Firestore
                                 Map<String, Object> notas = new HashMap<>();
                                 notas.put("nomeMateria", nomeMateria);
                                 notas.put("cred", notaCred);
@@ -120,7 +118,6 @@ public class ControleNotasEditActivity extends AppCompatActivity {
                                 notas.put("prova", notaPro);
                                 notas.put("nomeProf", nomeProf);
 
-                                // Atualizar as notas no Firestore
                                 db.collection("notas").document(App.notas.getId()).update(notas)
                                         .addOnSuccessListener(unused -> {
                                             Toast.makeText(this, "Notas Alteradas Com Sucesso!!", Toast.LENGTH_SHORT).show();
