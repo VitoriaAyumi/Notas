@@ -54,11 +54,7 @@ public class ControleNotasAddActivity extends AppCompatActivity {
         addNotas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String notaPreciso;
-
                 String nomeMateria = nomeMateriaSp.getSelectedItem().toString().trim();
-                // Verificar se a matéria é a primeira ("Selecione uma matéria")
                 if (nomeMateria.equals("Selecione uma matéria")) {
                     Toast.makeText(ControleNotasAddActivity.this, "Por favor, selecione uma matéria válida!", Toast.LENGTH_SHORT).show();
                     return;
@@ -69,49 +65,47 @@ public class ControleNotasAddActivity extends AppCompatActivity {
                 String notaList = Objects.requireNonNull(notaListaET.getText()).toString().trim();
                 String notaPro = Objects.requireNonNull(notaProvaET.getText()).toString().trim();
 
-                if (nomeMateria.isEmpty() || notaCred.isEmpty() || notaTrab.isEmpty() || notaList.isEmpty() || notaPro.isEmpty()) {
+                if (notaCred.isEmpty() || notaTrab.isEmpty() || notaList.isEmpty() || notaPro.isEmpty()) {
                     Toast.makeText(ControleNotasAddActivity.this, "Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
                     return;
-                } else {
-                    float ntPreciso, ntCred, ntTrab, ntList;
-
-                    ntCred = Float.parseFloat(notaCred);
-                    ntTrab = Float.parseFloat(notaTrab);
-                    ntList = Float.parseFloat(notaList);
-
-                    float ntSoma = ntCred + ntTrab + ntList;
-
-                    if (ntSoma < 6) {
-                        ntPreciso = 6 - ntSoma;
-                        notaPreciso = String.valueOf(ntPreciso);
-                    } else {
-                        notaPreciso = "Não precisa de pontos para passar!!";
-                        Toast.makeText(ControleNotasAddActivity.this, "Não está de recuperação!!", Toast.LENGTH_SHORT).show();
-                    }
-
                 }
 
-                Map<String, Object> notas = new HashMap<>();
-                notas.put("nomeMateria", nomeMateria);
-                notas.put("cred", Objects.requireNonNull(notaCredET.getText()).toString());
-                notas.put("trab", Objects.requireNonNull(notaTrabET.getText()).toString());
-                notas.put("list", Objects.requireNonNull(notaListaET.getText()).toString());
-                notas.put("pre", Objects.requireNonNull(notaPreciso));
-                notas.put("prova", Objects.requireNonNull(notaProvaET.getText()).toString());
+                float ntCred = Float.parseFloat(notaCred);
+                float ntTrab = Float.parseFloat(notaTrab);
+                float ntList = Float.parseFloat(notaList);
+                float ntSoma = ntCred + ntTrab + ntList;
+                String notaPreciso = ntSoma < 6 ? String.valueOf(6 - ntSoma) : "Não precisa de pontos para passar!!";
 
-                db.collection("notas").add(notas).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(ControleNotasAddActivity.this, "Notas adicionadas com sucesso!!", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ControleNotasAddActivity.this, "Falha Ao Tentar Adicionar Matéria: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Erro ao adicionar matéria", e);
-                    }
-                });
+                db.collection("materias").whereEqualTo("nomeMateria", nomeMateria).get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            String nomeProf = queryDocumentSnapshots.getDocuments().get(0).getString("nomeProf");
+                            if (nomeProf == null)
+                                nomeProf = "Desconhecido"; // Caso nomeProf esteja ausente.
+
+                            Map<String, Object> notas = new HashMap<>();
+                            notas.put("nomeMateria", nomeMateria);
+                            notas.put("cred", notaCred);
+                            notas.put("trab", notaTrab);
+                            notas.put("list", notaList);
+                            notas.put("pre", notaPreciso);
+                            notas.put("prova", notaPro);
+                            notas.put("nomeProf", nomeProf);
+
+                            db.collection("notas").add(notas).addOnSuccessListener(documentReference -> {
+                                Toast.makeText(ControleNotasAddActivity.this, "Notas adicionadas com sucesso!!", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }).addOnFailureListener(e -> {
+                                Toast.makeText(ControleNotasAddActivity.this, "Falha ao adicionar notas: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "Erro ao adicionar notas", e);
+                            });
+                        } else {
+                            Toast.makeText(ControleNotasAddActivity.this, "Matéria não encontrada no banco!", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(ControleNotasAddActivity.this, "Erro ao buscar professor: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Erro ao buscar professor", e);
+                    });
             }
         });
 
@@ -120,50 +114,59 @@ public class ControleNotasAddActivity extends AppCompatActivity {
     private void carregarMaterias(Spinner spinner) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("materias").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                // Lista que incluirá o texto neutro no início
-                ArrayList<String> listaMaterias = new ArrayList<>();
-                listaMaterias.add("Selecione uma matéria");  // Adiciona o texto neutro
+        ArrayList<String> materiasAdicionadas = new ArrayList<>();
 
-                // Adiciona as matérias reais da coleção
-                for (QueryDocumentSnapshot document : task.getResult()) {
+        db.collection("notas").get().addOnCompleteListener(taskNotas -> {
+            if (taskNotas.isSuccessful()) {
+                for (QueryDocumentSnapshot document : taskNotas.getResult()) {
                     String nomeMateria = document.getString("nomeMateria");
                     if (nomeMateria != null) {
-                        listaMaterias.add(nomeMateria);
+                        materiasAdicionadas.add(nomeMateria);
                     }
                 }
 
-                // Criar um ArrayAdapter customizado
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listaMaterias) {
-                    @Override
-                    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                        View view = super.getDropDownView(position, convertView, parent);
-                        TextView textView = (TextView) view;
-                        // Modificar a cor do texto no dropdown
-                        textView.setTextColor(Color.BLACK);  // Cor do texto no dropdown
-                        // Modificar a cor de fundo do dropdown
-                        view.setBackgroundColor(Color.WHITE); // Cor de fundo no dropdown
-                        return view;
+                db.collection("materias").get().addOnCompleteListener(taskMaterias -> {
+                    if (taskMaterias.isSuccessful()) {
+                        ArrayList<String> listaMaterias = new ArrayList<>();
+                        listaMaterias.add("Selecione uma matéria"); // Opção neutra
+
+                        for (QueryDocumentSnapshot document : taskMaterias.getResult()) {
+                            String nomeMateria = document.getString("nomeMateria");
+
+                            if (nomeMateria != null && !materiasAdicionadas.contains(nomeMateria)) {
+                                listaMaterias.add(nomeMateria);
+                            }
+                        }
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listaMaterias) {
+                            @Override
+                            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                                View view = super.getDropDownView(position, convertView, parent);
+                                TextView textView = (TextView) view;
+                                textView.setTextColor(Color.BLACK);
+                                view.setBackgroundColor(Color.WHITE);
+                                return view;
+                            }
+
+                            @Override
+                            public View getView(int position, View convertView, ViewGroup parent) {
+                                View view = super.getView(position, convertView, parent);
+                                TextView textView = (TextView) view;
+                                textView.setTextColor(Color.BLACK);
+                                return view;
+                            }
+                        };
+
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(adapter);
+                    } else {
+                        Toast.makeText(this, "Erro ao carregar matérias: " + taskMaterias.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        View view = super.getView(position, convertView, parent);
-                        TextView textView = (TextView) view;
-                        // Modificar a cor do texto no item selecionado
-                        textView.setTextColor(Color.BLACK);  // Cor do texto no item selecionado
-                        return view;
-                    }
-                };
-
-                // Definir o layout do dropdown
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-
+                });
             } else {
-                Toast.makeText(this, "Erro ao carregar matérias: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Erro ao carregar notas: " + taskNotas.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }
